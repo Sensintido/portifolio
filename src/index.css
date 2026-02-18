@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@layer base {
+  * {
+    cursor: none !important;
+  }
+
+  body {
+    font-family: 'Satoshi', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Satoshi', sans-serif;
+  }
+
+  a, button {
+    cursor: none;
+  }
+}
+
+/* Exceção para dispositivos touch/mobile: mostrar cursor padrão */
+@media (hover: none) and (pointer: coarse) {
+  * {
+    cursor: auto !important;
+  }
+  a, button {
+    cursor: pointer !important;
+  }
+}
+
+input, textarea {
+  cursor: text !important;
+}
+/* Estilos para a Seção de Experiência */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.timeline-line {
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1) 10%, rgba(255, 255, 255, 0.1) 90%, transparent);
+}
+
+.timeline-dot {
+  box-shadow: 0 0 15px var(--dot-color);
+  border: 2px solid black;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine-effect::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+  transform: rotate(45deg);
+  transition: 0.5s;
+}
+
+.shine-effect:hover::after {
+  left: 100%;
+}
+html {
+  scroll-behavior: smooth;
+  /* Opcional: compensação para o header fixo não cobrir o título da seção */
+  scroll-padding-top: 100px; 
+}
