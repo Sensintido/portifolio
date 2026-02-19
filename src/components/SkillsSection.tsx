@@ -18,6 +18,7 @@ const skills = [
   { name: "MongoDB", category: "Database", color: "#47A248", slug: "mongodb" },
   { name: "Figma", category: "Design", color: "#F24E1E", customIcon: FigmaIcon },
   { name: "Photoshop", category: "Design", color: "#31A8FF", customIcon: PhotoshopIcon },
+  { name: "Python", category: "Backend", color: "#1e97ee", slug: "python" },
 ];
 
 export default function SkillsSection() {
@@ -31,7 +32,7 @@ export default function SkillsSection() {
     <section id="skills" className="py-20 md:py-32 px-4 md:px-6 relative">
       <div className="max-w-6xl mx-auto">
 
-        {/* Cabeçalho — mesmo padrão das outras seções */}
+    
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -48,7 +49,7 @@ export default function SkillsSection() {
           <p className="text-gray-400 text-base md:text-lg">As tecnologias que utilizo para transformar ideias em realidade</p>
         </motion.div>
 
-        {/* FILTROS */}
+
         <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10 md:mb-16">
           {categories.map((cat) => (
             <button
@@ -65,7 +66,7 @@ export default function SkillsSection() {
           ))}
         </div>
 
-        {/* GRID */}
+
         <motion.div
           layout
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4"
@@ -93,7 +94,7 @@ export default function SkillsSection() {
                   (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)';
                 }}
               >
-                {/* Ícone */}
+
                 <div className="relative mb-4 md:mb-5">
                   <div
                     className="absolute inset-0 rounded-full blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-500"
@@ -109,12 +110,11 @@ export default function SkillsSection() {
                   />
                 </div>
 
-                {/* Nome */}
+
                 <p className="text-xs md:text-sm font-semibold text-white/60 group-hover:text-white transition-colors duration-300 tracking-wide">
                   {skill.name}
                 </p>
 
-                {/* Linha colorida embaixo no hover */}
                 <div
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-0 group-hover:w-1/2 transition-all duration-500 rounded-full"
                   style={{ backgroundColor: skill.color }}
