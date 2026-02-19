@@ -6,7 +6,7 @@ const contactMethods = [
     icon: Mail,
     label: "E-mail",
     value: "lucasgabrielwdesouza@gmail.com",
-    link: "https://mail.google.com/mail/u/0/#compose?to=lucasgabrielwdesouza@gmail.com",
+    link: "https://mail.google.com/mail/?view=cm&fs=1&to=lucasgabrielwdesouza@gmail.com",
     glow: "rgba(99,130,255,0.6)",
     glowSoft: "rgba(99,130,255,0.15)",
     border: "rgba(99,130,255,0.4)",
@@ -42,7 +42,7 @@ const contactMethods = [
 
 export default function ContactSection() {
   return (
-    <section id="contato" className="relative py-32 px-6 overflow-hidden">
+    <section id="contato" className="relative py-20 md:py-32 px-4 md:px-6 overflow-hidden">
       <div className="relative z-10 max-w-5xl mx-auto">
 
         {/* Cabeçalho */}
@@ -51,25 +51,24 @@ export default function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="flex flex-col items-center text-center mb-24"
+          className="flex flex-col items-center text-center mb-16 md:mb-24"
         >
           <div className="px-4 py-1 rounded-full border border-white/10 bg-white/5 mb-6">
             <span className="text-[10px] tracking-[0.3em] text-gray-400 uppercase font-bold">Contato</span>
           </div>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] text-white mb-5 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-[0.9] text-white mb-5 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
             Vamos trabalhar<br />juntos?
           </h2>
-          <p className="text-gray-500 text-base max-w-sm leading-relaxed">
+          <p className="text-gray-500 text-sm md:text-base max-w-sm leading-relaxed">
             Aberto a projetos, freelas e colaborações.
           </p>
         </motion.div>
 
-        {/* Cards afundados */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-end">
+        {/* Cards — 2 colunas no mobile, 4 no desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 items-end">
           {contactMethods.map((method, i) => {
             const Icon = method.icon;
-            // Alturas variadas para efeito "saindo do chão"
-            const heights = ['h-52', 'h-64', 'h-56', 'h-60'];
+            const heights = ['h-44 md:h-52', 'h-52 md:h-64', 'h-48 md:h-56', 'h-52 md:h-60'];
             return (
               <motion.a
                 key={method.label}
@@ -81,7 +80,7 @@ export default function ContactSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className={`group relative ${heights[i]} rounded-t-3xl rounded-b-none flex flex-col justify-between p-6 overflow-hidden cursor-pointer`}
+                className={`group relative ${heights[i]} rounded-t-3xl rounded-b-none flex flex-col justify-between p-4 md:p-6 overflow-hidden cursor-pointer`}
                 style={{
                   background: 'rgba(255,255,255,0.02)',
                   border: `1px solid rgba(255,255,255,0.07)`,
@@ -103,27 +102,24 @@ export default function ContactSection() {
                   el.style.background = 'rgba(255,255,255,0.02)';
                 }}
               >
-                {/* Ícone no topo */}
                 <div
-                  className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-xl flex items-center justify-center transition-all duration-300"
                   style={{ background: 'rgba(255,255,255,0.05)' }}
                 >
-                  <Icon size={18} className="text-white/40 group-hover:text-white/90 transition-colors duration-300" />
+                  <Icon size={15} className="text-white/40 group-hover:text-white/90 transition-colors duration-300" />
                 </div>
 
-                {/* Texto em baixo */}
                 <div>
-                  <p className="text-[10px] tracking-[0.3em] uppercase text-white/25 font-bold mb-2 group-hover:text-white/50 transition-colors duration-300">
+                  <p className="text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-white/25 font-bold mb-1 md:mb-2 group-hover:text-white/50 transition-colors duration-300">
                     {method.label}
                   </p>
-                  <p className="text-white/70 text-sm font-semibold leading-tight group-hover:text-white transition-colors duration-300 break-all">
+                  <p className="text-white/70 text-xs md:text-sm font-semibold leading-tight group-hover:text-white transition-colors duration-300 break-all">
                     {method.value}
                   </p>
                 </div>
 
-                {/* Brilho de fundo no hover — círculo de luz vindo de baixo */}
                 <div
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-2xl"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-24 md:w-32 md:h-32 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-2xl"
                   style={{ background: method.glow }}
                 />
               </motion.a>
@@ -131,7 +127,7 @@ export default function ContactSection() {
           })}
         </div>
 
-        {/* Linha de "chão" */}
+        {/* Linha de chão */}
         <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
         {/* Footer */}
@@ -140,9 +136,9 @@ export default function ContactSection() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="mt-16 flex flex-col sm:flex-row items-center justify-between gap-4"
+          className="mt-12 md:mt-16 flex flex-col sm:flex-row items-center justify-between gap-4"
         >
-          <p className="text-gray-700 text-xs tracking-widest uppercase">
+          <p className="text-gray-700 text-xs tracking-widest uppercase text-center sm:text-left">
             © 2026 Lucas Gabriel Wendler de Souza
           </p>
           <p className="text-gray-700 text-xs">
