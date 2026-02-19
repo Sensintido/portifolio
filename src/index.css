@@ -22,7 +22,7 @@
 input, textarea {
   cursor: text !important;
 }
-/* Estilos para a Seção de Experiência */
+
 .glass-card {
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
