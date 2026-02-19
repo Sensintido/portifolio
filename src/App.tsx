@@ -73,7 +73,7 @@ export default function App() {
               {[
                 { icon: <Github size={20} />, link: "https://github.com/sensintido" },
                 { icon: <Linkedin size={20} />, link: "https://linkedin.com/in/lucas-gabriel-b83733312/" },
-                { icon: <Mail size={20} />, link: "mailto:lucasgabrielwdesouza@gmail.com" }
+                { icon: <Mail size={20} />, link: "https://mail.google.com/mail/?view=cm&fs=1&to=lucasgabrielwdesouza@gmail.com" }
               ].map((social, i) => (
                 <motion.a 
                   key={i}

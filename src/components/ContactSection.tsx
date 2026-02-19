@@ -6,7 +6,7 @@ const contactMethods = [
     icon: Mail,
     label: "E-mail",
     value: "lucasgabrielwdesouza@gmail.com",
-    link: "https://mail.google.com/mail/?view=cm&to=lucasgabrielwdesouza@gmail.com",
+    link: "https://mail.google.com/mail/u/0/#compose?to=lucasgabrielwdesouza@gmail.com",
     glow: "rgba(99,130,255,0.6)",
     glowSoft: "rgba(99,130,255,0.15)",
     border: "rgba(99,130,255,0.4)",
