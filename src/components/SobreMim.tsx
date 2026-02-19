@@ -1,12 +1,73 @@
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+
+const lines = [
+  { text: '> whoami', delay: 0, type: 'cmd' },
+  { text: 'Lucas Gabriel Wendler de Souza', delay: 0.6, type: 'output' },
+  { text: '> role', delay: 1.1, type: 'cmd' },
+  { text: 'Full Stack Developer', delay: 1.7, type: 'output' },
+  { text: '> skills --list', delay: 2.2, type: 'cmd' },
+  { text: '[ React, TypeScript, Java, Spring Boot, Figma ]', delay: 2.8, type: 'output' },
+  { text: '> passion', delay: 3.3, type: 'cmd' },
+  { text: 'Interfaces elegantes + experiências memoráveis', delay: 3.9, type: 'output' },
+  { text: '> status', delay: 4.4, type: 'cmd' },
+  { text: 'Disponível para novos projetos ✓', delay: 5.0, type: 'output' },
+];
+
+function TypingLine({ text, delay, type }: { text: string; delay: number; type: string }) {
+  const [displayed, setDisplayed] = useState('');
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setStarted(true), delay * 1000);
+    return () => clearTimeout(timeout);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!started) return;
+    let i = 0;
+    const interval = setInterval(() => {
+      setDisplayed(text.slice(0, i + 1));
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, 28);
+    return () => clearInterval(interval);
+  }, [started, text]);
+
+  if (!started && displayed === '') return null;
+
+  return (
+    <div className={`flex items-start gap-3 ${type === 'cmd' ? 'mt-5' : 'mt-1'}`}>
+      {type === 'cmd' ? (
+        <span className="text-green-400 text-sm font-mono shrink-0 mt-0.5">$</span>
+      ) : (
+        <span className="text-white/20 text-sm font-mono shrink-0 mt-0.5">→</span>
+      )}
+      <span className={`font-mono text-sm md:text-base ${
+        type === 'cmd' ? 'text-white/90' : 'text-cyan-300/80'
+      }`}>
+        {displayed}
+        {displayed.length < text.length && started && (
+          <span className="inline-block w-2 h-4 bg-white/70 ml-0.5 animate-pulse align-middle" />
+        )}
+      </span>
+    </div>
+  );
+}
+
+const stats = [
+  { value: '2+', label: 'Anos de experiência', desc: 'Desenvolvendo produtos reais' },
+  { value: '8+', label: 'Projetos entregues', desc: 'Do protótipo ao deploy' },
+  { value: '3', label: 'Stacks dominadas', desc: 'Front, Back e Design' },
+];
 
 export default function SobreMim() {
   return (
-    <section id="sobre" className="relative py-20 md:py-24 px-4 md:px-6 overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-white/[0.02] blur-[120px] rounded-full pointer-events-none" />
-
+    <section id="sobre" className="relative py-20 md:py-32 px-4 md:px-6 overflow-hidden">
       <div className="max-w-5xl mx-auto relative z-10">
-        <motion.div 
+
+        {/* Cabeçalho */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -21,40 +82,51 @@ export default function SobreMim() {
           </h2>
         </motion.div>
 
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="bg-white/[0.02] border border-white/5 rounded-[24px] md:rounded-[32px] p-6 md:p-12 mb-8 md:mb-12 backdrop-blur-sm"
+          transition={{ duration: 0.7 }}
+          className="rounded-2xl overflow-hidden border border-white/[0.08] mb-10 md:mb-16"
         >
-          <p className="text-gray-400 text-base md:text-lg lg:text-xl leading-relaxed text-center max-w-4xl mx-auto font-light">
-            Sou desenvolvedor <span className="text-white font-medium">Full Stack</span> apaixonado por criar interfaces elegantes e experiências de usuário memoráveis. Com conhecimento em diversas tecnologias, busco sempre entregar soluções que combinam <span className="text-blue-500 font-medium">estética</span> e <span className="text-cyan-400 font-medium">funcionalidade</span>.
-            <br /><br />
-            Minha experiência abrange desde o desenvolvimento web até design de interfaces, utilizando ferramentas como <span className="text-blue-500 font-medium">Photoshop</span> e <span className="text-cyan-400 font-medium">Figma</span> para prototipagem e criação visual. <span className="text-green-500 font-medium">SpringBoot</span> e <span className="text-orange-500 font-medium">Java</span> para um back-end bem consolidado e seguro.
-          </p>
+          <div className="flex items-center gap-2 px-4 py-3 bg-white/[0.04] border-b border-white/[0.06]">
+            <div className="w-3 h-3 rounded-full bg-red-500/60" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
+            <div className="w-3 h-3 rounded-full bg-green-500/60" />
+            <span className="ml-3 text-[11px] text-white/25 font-mono tracking-wider">lucas@portfolio ~ </span>
+          </div>
+          <div className="bg-black/60 backdrop-blur-sm p-6 md:p-8 min-h-[280px]">
+            {lines.map((line, i) => (
+              <TypingLine key={i} {...line} />
+            ))}
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-          {[
-            { title: "Código Limpo", desc: "Desenvolvimento com boas práticas e código organizado.", icon: "</>", color: "text-cyan-400" },
-            { title: "Design Moderno", desc: "Interfaces elegantes e experiências memoráveis.", icon: "✦", color: "text-pink-500" },
-            { title: "Inovação", desc: "Sempre buscando as melhores tecnologias.", icon: "⚡", color: "text-yellow-400" },
-          ].map((item, i) => (
-            <motion.div 
-              key={i} 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.2 }}
-              className="group p-6 md:p-8 rounded-[20px] md:rounded-[24px] bg-white/[0.02] border border-white/5 hover:border-white/20 hover:bg-white/[0.04] transition-all duration-500 text-center"
-            >
-              <div className={`text-2xl mb-4 ${item.color} group-hover:scale-110 transition-transform`}>{item.icon}</div>
-              <h3 className={`text-base md:text-lg font-bold mb-3 ${item.color}`}>{item.title}</h3>
-              <p className="text-white text-sm leading-relaxed font-light">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
+
+        <div className="flex justify-center gap-0">
+  {stats.map((stat, i) => (
+    <motion.div
+      key={i}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: i * 0.1 }}
+      className="group flex-1 px-4 md:px-10 py-6 md:py-8 text-center hover:bg-white/[0.02] transition-colors duration-500"
+    >
+      <p className="text-4xl md:text-6xl font-black tracking-tighter text-white mb-1 group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-500">
+        {stat.value}
+      </p>
+      <p className="text-white/60 text-xs md:text-sm font-semibold mb-1 uppercase tracking-widest">
+        {stat.label}
+      </p>
+      <p className="text-white/25 text-xs hidden md:block">
+        {stat.desc}
+      </p>
+    </motion.div>
+  ))}
+</div>
+
       </div>
     </section>
   );
