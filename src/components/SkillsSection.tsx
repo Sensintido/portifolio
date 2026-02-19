@@ -23,31 +23,41 @@ const skills = [
 export default function SkillsSection() {
   const [activeFilter, setActiveFilter] = useState("Todos");
 
-  const filteredSkills = skills.filter(skill => 
+  const filteredSkills = skills.filter(skill =>
     activeFilter === "Todos" ? true : skill.category === activeFilter
   );
 
   return (
-    <section id="skills" className="py-20 md:py-24 px-4 md:px-6 relative">
+    <section id="skills" className="py-20 md:py-32 px-4 md:px-6 relative">
       <div className="max-w-6xl mx-auto">
-        
-        <div className="text-center mb-10 md:mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-3 md:mb-4 tracking-tighter drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+
+        {/* Cabeçalho — mesmo padrão das outras seções */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-center text-center mb-12 md:mb-16"
+        >
+          <div className="px-4 py-1 rounded-full border border-white/10 bg-white/5 mb-4">
+            <span className="text-[10px] tracking-[0.3em] text-gray-400 uppercase font-bold">Tecnologias</span>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter drop-shadow-[0_0_30px_rgba(255,255,255,0.2)] mb-3">
             Skills & Ferramentas
           </h2>
           <p className="text-gray-400 text-base md:text-lg">As tecnologias que utilizo para transformar ideias em realidade</p>
-        </div>
+        </motion.div>
 
         {/* FILTROS */}
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10 md:mb-20">
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10 md:mb-16">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
-              className={`px-5 md:px-8 py-2 md:py-2.5 rounded-full border transition-all duration-300 text-xs md:text-sm font-bold ${
-                activeFilter === cat 
-                ? "bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.2)]" 
-                : "bg-white/5 text-gray-400 border-white/5 hover:border-white/20"
+              className={`px-5 md:px-7 py-2 rounded-full border transition-all duration-300 text-xs md:text-sm font-bold tracking-wide ${
+                activeFilter === cat
+                  ? "bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                  : "bg-transparent text-white/30 border-white/10 hover:text-white/70 hover:border-white/30"
               }`}
             >
               {cat}
@@ -56,37 +66,64 @@ export default function SkillsSection() {
         </div>
 
         {/* GRID */}
-        <motion.div layout className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-6">
-          <AnimatePresence mode='popLayout'>
+        <motion.div
+          layout
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4"
+        >
+          <AnimatePresence mode="popLayout">
             {filteredSkills.map((skill) => (
               <motion.div
                 key={skill.name}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.92 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="group relative p-5 md:p-8 rounded-[24px] md:rounded-[32px] bg-[#0A0A0A] border border-white/5 flex flex-col items-center justify-center text-center overflow-hidden transition-all duration-500 hover:border-white/20"
+                exit={{ opacity: 0, scale: 0.92 }}
+                transition={{ duration: 0.25 }}
+                className="group relative flex flex-col items-center justify-center text-center p-5 md:p-7 rounded-2xl overflow-hidden"
+                style={{
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.06)',
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.borderColor = `${skill.color}35`;
+                  (e.currentTarget as HTMLElement).style.background = `radial-gradient(ellipse at 50% 0%, ${skill.color}10 0%, rgba(0,0,0,0) 70%)`;
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.06)';
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.02)';
+                }}
               >
-                <div className="relative mb-4 md:mb-6 z-10">
-                  <div 
-                    className="absolute inset-0 blur-2xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 rounded-full"
+                {/* Ícone */}
+                <div className="relative mb-4 md:mb-5">
+                  <div
+                    className="absolute inset-0 rounded-full blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-500"
                     style={{ backgroundColor: skill.color }}
                   />
                   <img
-                    src={skill.customIcon 
-                        ? skill.customIcon 
-                        : `https://cdn.simpleicons.org/${skill.slug}/${skill.color.replace('#', '')}`
+                    src={skill.customIcon
+                      ? skill.customIcon
+                      : `https://cdn.simpleicons.org/${skill.slug}/${skill.color.replace('#', '')}`
                     }
                     alt={skill.name}
-                    className="w-10 h-10 md:w-16 md:h-16 relative z-10 transition-transform duration-500 group-hover:scale-90"
+                    className="w-10 h-10 md:w-14 md:h-14 relative z-10 transition-transform duration-400 group-hover:-translate-y-1"
                   />
                 </div>
-                <h3 className="text-sm md:text-xl font-bold mb-1 text-white z-10">{skill.name}</h3>
-                <div className="h-4 md:h-8 transition-all group-hover:h-6 md:group-hover:h-12" />
+
+                {/* Nome */}
+                <p className="text-xs md:text-sm font-semibold text-white/60 group-hover:text-white transition-colors duration-300 tracking-wide">
+                  {skill.name}
+                </p>
+
+                {/* Linha colorida embaixo no hover */}
+                <div
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-0 group-hover:w-1/2 transition-all duration-500 rounded-full"
+                  style={{ backgroundColor: skill.color }}
+                />
               </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
+
       </div>
     </section>
   );
